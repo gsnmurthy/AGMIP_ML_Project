@@ -32,14 +32,12 @@ def loadDatasets(yield_filePath, plant_filePath, maty_filePath, crop_name):
     yieldData = xr.open_dataset(yield_filePath, decode_times=False)
 
     # Decoding time variable of the dataset using pandas.
-    units, referenceDate = plantData.time.attrs['units'].split('since')
-    plantData['time'] = pd.date_range(start=referenceDate, periods=plantData.sizes['time'], freq='MS')
+    initialYear = 1979
+    timeArray = initialYear + yieldData.variables['time'].values
 
-    units, referenceDate = matyData.time.attrs['units'].split('since')
-    matyData['time'] = pd.date_range(start=referenceDate, periods=matyData.sizes['time'], freq='MS')
-
-    units, referenceDate = yieldData.time.attrs['units'].split('since')
-    yieldData['time'] = pd.date_range(start=referenceDate, periods=yieldData.sizes['time'], freq='MS')
+    plantData['time'] = timeArray.astype(int)
+    matyData['time'] = timeArray.astype(int)
+    yieldData['time'] = timeArray.astype(int)
 
     # Converting dataset in DataFrame format for modification.
     plantDF = plantData['plant-day_{}'.format(crop_name)].to_dataframe()
@@ -51,7 +49,7 @@ def loadDatasets(yield_filePath, plant_filePath, maty_filePath, crop_name):
     yieldDF['maturity-day'] = matyDF['maty-day_{}'.format(crop_name)]
 
     # Deleting unnecessary variables to conserve space in the system.
-    del plantDF, matyDF, plantData, matyData, yieldData, units, referenceDate
+    del plantDF, matyDF, plantData, matyData, yieldData
     return yieldDF
 
 
@@ -122,7 +120,7 @@ def soilFeatureCombine(yieldDF, soilFile):
 
     # Dropping additional features from the file to conserve computation power.
     soilDF = soilDF.drop(columns=['mu_global', 'bulk_density', 'root_obstacles', 'impermeable_layer', 'ece', 'bs_soil', 'issoil'])
-    
+
     # Dropping any row with null value.
     soilDF = soilDF.dropna(how='any')
 
