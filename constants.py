@@ -20,11 +20,13 @@ output_dir = "./outputs"
 
 plant_dir = "./ggcmi/phase2_outputs/dataset/plant-day/"
 
-maty_dir = "./ggcmi/phase2_outputs/dataset/plant-day/"
+maty_dir = "./ggcmi/phase2_outputs/dataset/maty-day/"
 
-yield_dir = "./ggcmi/phase2_outputs/dataset/plant-day/"
+yield_dir = "./ggcmi/phase2_outputs/dataset/yield/"
 
 soil_file_path = "./ggcmi/HWSD/HWSD_soil_data_on_cropland_v2.2.nc"
+
+shape_file_path = "./shape_files/"
 
 agmerra_files_path = "./ggcmi/AgMerra/"
 
