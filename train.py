@@ -211,13 +211,13 @@ if __name__ == "__main__":
                 val_loss_DF = val_loss_DF.rename(columns={0 : 'val_loss'})
                 print("loss_DF : ", loss_DF)
                 print("val_loss_DF : ", val_loss_DF)
-                loss_DF.to_feather(os.path.join(output_dir, graphs_dir, "loss_DF.feather"))
-                val_loss_DF.to_feather(os.path.join(output_dir, graphs_dir, "val_loss_DF.feather"))
+                loss_DF.to_feather(os.path.join(output_dir, graphs_dir, ".loss_DF.feather"))
+                val_loss_DF.to_feather(os.path.join(output_dir, graphs_dir, ".val_loss_DF.feather"))
 
                 gc.collect()
             else:
-                prev_loss_DF = pd.read_feather(os.path.join(output_dir, graphs_dir, "loss_DF.feather"))
-                prev_val_loss_DF = pd.read_feather(os.path.join(output_dir, graphs_dir, "val_loss_DF.feather"))
+                prev_loss_DF = pd.read_feather(os.path.join(output_dir, graphs_dir, ".loss_DF.feather"))
+                prev_val_loss_DF = pd.read_feather(os.path.join(output_dir, graphs_dir, ".val_loss_DF.feather"))
 
                 loss_DF = pd.DataFrame(history.history['loss']).rename(columns={0: 'loss'})
                 val_loss_DF = pd.DataFrame(history.history['val_loss']).rename(columns={0: 'val_loss'})
@@ -225,8 +225,8 @@ if __name__ == "__main__":
                 loss_DF = pd.concat([prev_loss_DF, loss_DF], ignore_index=True)
                 val_loss_DF = pd.concat([prev_val_loss_DF, val_loss_DF], ignore_index=True)
 
-                loss_DF.to_feather(os.path.join(output_dir, graphs_dir, "loss_DF.feather"))
-                val_loss_DF.to_feather(os.path.join(output_dir, graphs_dir, "val_loss_DF.feather"))
+                loss_DF.to_feather(os.path.join(output_dir, graphs_dir, ".loss_DF.feather"))
+                val_loss_DF.to_feather(os.path.join(output_dir, graphs_dir, ".val_loss_DF.feather"))
 
             # Plottting the loss graph and saving it in graph directory.
             plt.plot(loss_DF)
