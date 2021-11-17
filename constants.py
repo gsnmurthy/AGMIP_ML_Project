@@ -12,6 +12,8 @@ input_dir = "./inputs"
 
 final_inputs_dir = "final_inputs"
 
+test_files_dir = "test_files"
+
 graphs_dir = "graphs"
 
 saved_models_dir = "saved_models"
